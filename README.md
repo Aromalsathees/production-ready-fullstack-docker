@@ -648,14 +648,34 @@ Django + React + PostgreSQL
 and convert it into:
 
 ```text
-       Docker Compose
-            │
-    ┌───────┼────────┐
-    ▼       ▼        ▼
-   DB    Backend   Frontend
-         Django     React
-                     │
-                   Nginx
+
+                 Dockerfile
+                     ↓
+                  build
+                     ↓
+                   Image
+                     ↓
+             docker compose up
+                     ↓
+                Container
+
+
+
+
+                 docker-compose.yml
+                         │
+          ┌──────────────┼──────────────┐
+          ↓              ↓              ↓
+      Backend         Frontend          DB
+          ↓              ↓              ↓
+    Dockerfile      Dockerfile      postgres image
+          ↓              ↓              ↓
+    Backend Image   Frontend Image   PostgreSQL Image
+          ↓              ↓              ↓
+    Backend          Frontend        PostgreSQL
+    Container        Container       Container
+
+
 ```
 
 After completing this repository, you should be able to **Dockerize your own Django + React + PostgreSQL projects**.
