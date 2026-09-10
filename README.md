@@ -676,6 +676,42 @@ and convert it into:
     Container        Container       Container
 
 
+
+                 docker compose build
+                         ↓
+              docker-compose.yml read
+                         ↓
+             ┌───────────┴───────────┐
+             ↓                       ↓
+       Backend Dockerfile      Frontend Dockerfile
+             ↓                       ↓
+       Python base image       Node base image
+             ↓                       ↓
+       install dependencies    npm install
+             ↓                       ↓
+       copy Django project     copy React project
+             ↓                       ↓
+       CMD recorded            npm run build
+             ↓                       ↓
+       BACKEND IMAGE           FRONTEND IMAGE
+             │                       │
+             └───────────┬───────────┘
+                         ↓
+                  docker compose up
+                         ↓
+                    Containers
+                         ↓
+              ┌──────────┼──────────┐
+              ↓          ↓          ↓
+           Backend    Frontend      DB
+          Container   Container   Container
+              ↓
+        CMD / command
+              ↓
+          Gunicorn or
+          runserver
+
+
 ```
 
 After completing this repository, you should be able to **Dockerize your own Django + React + PostgreSQL projects**.
